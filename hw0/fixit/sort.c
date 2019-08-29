@@ -12,7 +12,7 @@ size_t snscan_word(FILE*file, char **output_buffer) {
     char *buf = malloc(sizeof(*buf) * max_size);
     char letter = 0;
 
-    while (fread(&letter, 1, 1, stdin) && !is_visible_char(letter));
+    while (fread(&letter, 1, 1, file) && !is_visible_char(letter));
 
     if (!letter) {
         return 0;
@@ -20,7 +20,7 @@ size_t snscan_word(FILE*file, char **output_buffer) {
     buf[0] = letter;
 
     size_t i;
-    for (i = 1; fread(&letter, 1, 1, stdin) && is_visible_char(letter); i++) {
+    for (i = 1; fread(&letter, 1, 1, file) && is_visible_char(letter); i++) {
         if (i+1 >= max_size) {
             max_size *= 2;
             buf = realloc(buf, max_size);
